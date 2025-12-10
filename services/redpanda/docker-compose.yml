@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  redpanda:
+    image: redpandadata/redpanda:${REDPANDA_TAG:-v24.1.8}
+    command:
+      - redpanda
+      - start
+      - --mode=dev-container
+      - --overprovisioned
+      - --smp=1
+      - --memory=1G
+      - --reserve-memory=0M
+      - --node-id=0
+      - --kafka-addr=PLAINTEXT://0.0.0.0:9092
+      - --advertise-kafka-addr=PLAINTEXT://localhost:${REDPANDA_KAFKA_PORT:-9092}
+      - --pandaproxy-addr=PLAINTEXT://0.0.0.0:8082
+      - --advertise-pandaproxy-addr=PLAINTEXT://localhost:${REDPANDA_PANDA_PORT:-8082}
+    ports:
+      - "${REDPANDA_KAFKA_PORT:-9092}:9092"
+      - "${REDPANDA_PANDA_PORT:-8082}:8082"
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+

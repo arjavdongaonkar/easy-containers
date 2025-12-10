@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  drone:
+    image: drone/drone:2
+    env_file:
+      - .env
+    ports:
+      - "8084:80"
+    volumes:
+      - drone-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  drone-data:
+

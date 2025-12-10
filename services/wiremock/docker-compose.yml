@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  wiremock:
+    image: wiremock/wiremock:3.6.0
+    command: ["--verbose"]
+    ports:
+      - "8082:8080"
+      - "8443:8443"
+    volumes:
+      - ./mappings:/home/wiremock/mappings
+      - ./__files:/home/wiremock/__files
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8080/__admin/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+

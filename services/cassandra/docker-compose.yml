@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  cassandra:
+    image: cassandra:${CASSANDRA_TAG:-4.1}
+    environment:
+      - HEAP_NEWSIZE=256M
+      - MAX_HEAP_SIZE=1G
+    ports:
+      - "${CASSANDRA_PORT:-9042}:9042"
+    volumes:
+      - cassandra-data-${CASSANDRA_TAG:-4.1}:/var/lib/cassandra
+    healthcheck:
+      test: ["CMD-SHELL", "cqlsh -e 'SHOW VERSION' localhost 9042 || exit 1"]
+      interval: 20s
+      timeout: 15s
+      retries: 10
+
+volumes:
+  cassandra-data-4.1:
+

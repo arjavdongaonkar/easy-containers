@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  gitlab-runner:
+    image: gitlab/gitlab-runner:alpine-v17.5.0
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - gitlab-runner-config:/etc/gitlab-runner
+    healthcheck:
+      test: ["CMD-SHELL", "gitlab-runner --version || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  gitlab-runner-config:
+

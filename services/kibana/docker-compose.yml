@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.15.1
+    environment:
+      ELASTICSEARCH_HOSTS: "http://elasticsearch:9200"
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.1
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+    ports:
+      - "9202:9200"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - es-kibana-data:/usr/share/elasticsearch/data
+
+volumes:
+  es-kibana-data:
+

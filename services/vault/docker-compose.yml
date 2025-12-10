@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  vault:
+    image: hashicorp/vault:1.17.3
+    environment:
+      - VAULT_DEV_ROOT_TOKEN_ID=root
+      - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8200/v1/sys/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+

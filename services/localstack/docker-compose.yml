@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  localstack:
+    image: localstack/localstack:3.2
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - SERVICES=s3,sqs,sns,lambda,dynamodb,cloudwatch,sts,iam
+      - DEBUG=0
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - localstack-data:/var/lib/localstack
+    healthcheck:
+      test: ["CMD-SHELL", "awslocal s3 ls || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+
+volumes:
+  localstack-data:
+

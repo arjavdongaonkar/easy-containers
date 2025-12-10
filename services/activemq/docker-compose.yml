@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  activemq:
+    image: apache/activemq-classic:${ACTIVEMQ_TAG:-5.18.3}
+    ports:
+      - "${ACTIVEMQ_PORT:-61616}:61616"
+      - "${ACTIVEMQ_UI_PORT:-8161}:8161"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:${ACTIVEMQ_UI_PORT:-8161} || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+

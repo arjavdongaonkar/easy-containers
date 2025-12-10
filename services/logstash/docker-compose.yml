@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.15.1
+    ports:
+      - "5044:5044"
+      - "9601:9600"
+    volumes:
+      - ./pipeline:/usr/share/logstash/pipeline
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:9600/_node/pipelines || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+

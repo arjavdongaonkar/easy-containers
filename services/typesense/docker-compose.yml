@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  typesense:
+    image: typesense/typesense:0.25.2
+    env_file:
+      - .env
+    ports:
+      - "8108:8108"
+    command: ["--data-dir", "/data", "--api-key", "${TYPESENSE_API_KEY:-xyz}", "--enable-cors"]
+    volumes:
+      - typesense-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8108/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  typesense-data:
+

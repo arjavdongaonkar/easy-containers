@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  clair:
+    image: quay.io/projectquay/clair:4.7.4
+    environment:
+      - CLAIR_MODE=combo
+    ports:
+      - "6060:6060"
+      - "6061:6061"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:6060/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+

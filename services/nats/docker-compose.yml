@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  nats:
+    image: nats:${NATS_TAG:-2.10}
+    ports:
+      - "${NATS_PORT:-4222}:4222"
+      - "${NATS_MONITOR_PORT:-8222}:8222"
+      - "${NATS_CLUSTER_PORT:-6222}:6222"
+    healthcheck:
+      test: ["CMD-SHELL", "nats-box -server nats://localhost:${NATS_PORT:-4222} 2>/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+

@@ -1,0 +1,11 @@
+# Ignore local environment overrides
+.env
+.env.*
+
+# Compose state
+**/data
+**/logs
+
+# macOS metadata
+.DS_Store
+

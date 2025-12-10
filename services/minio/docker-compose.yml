@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  minio:
+    image: quay.io/minio/minio:RELEASE.2024-08-03T04-33-23Z
+    env_file:
+      - .env
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "mc ready local || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  minio-data:
+

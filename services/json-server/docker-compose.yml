@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  json-server:
+    image: ghcr.io/typicode/json-server:latest
+    command: ["--watch", "db.json", "--host", "0.0.0.0", "--port", "3004"]
+    ports:
+      - "3004:3004"
+    volumes:
+      - ./db.json:/data/db.json
+    working_dir: /data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:3004 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+

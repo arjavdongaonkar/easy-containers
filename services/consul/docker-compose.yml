@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  consul:
+    image: hashicorp/consul:1.19.0
+    command: agent -dev -client=0.0.0.0
+    ports:
+      - "8500:8500"
+      - "8600:8600/udp"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8500/v1/status/leader || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
