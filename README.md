@@ -3,61 +3,77 @@
 Ready-to-run container setups for common development dependencies. Clone the repo, pick the service you need, and start it with Docker Compose—no local installs or version conflicts.
 
 ## Why
+
 - Complex apps need services like Kafka, Redis, PostgreSQL, or Elasticsearch just to boot.
 - Running multiple versions locally is painful and resource-heavy.
 - Containers keep each project isolated and disposable.
 
 ## What’s included (by category)
+
 **Databases**
+
 - PostgreSQL, MySQL, MariaDB, MongoDB, Redis, Cassandra, Neo4j, ClickHouse, SQLite (with sqlite-web)
 
 **Message brokers / queues**
+
 - Kafka + Zookeeper, RabbitMQ, NATS, ActiveMQ, Redpanda (Kafka-compatible)
 
 **Search / indexing / analytics**
+
 - Elasticsearch, OpenSearch, Meilisearch, Typesense, Logstash, Kibana, Grafana Loki stack, Prometheus
 
 **Dev tools / supporting services**
+
 - MinIO, LocalStack, Mailpit, HashiCorp Vault, Consul, Etcd, Jaeger, Zipkin
 
 **Frontend / API mocking**
+
 - WireMock, MockServer, JSON Server
 
 **CI / Git / runners**
+
 - Jenkins, GitLab Runner, Drone CI
 
 **Security / SBOM / scanners**
+
 - Clair, Trivy, Grype, SonarQube
 
 ## Prerequisites (macOS focus)
+
 - Docker Desktop **or** Colima + Docker CLI.
 - Docker Compose v2 (bundled with modern Docker builds).
 
 If you use Colima (recommended on macOS):
+
 ```bash
 colima start --cpu 2 --memory 4 --disk 20
 ```
 
 ## Usage
+
 Each service lives under `services/<name>/docker-compose.yml`.
 
 Start a service (example: Redis):
+
 ```bash
 cd services/redis
 docker compose up -d
 ```
 
 Stop and remove containers:
+
 ```bash
 docker compose down
 ```
 
 For services with credentials, copy the sample env file first:
+
 ```bash
 cp env.sample .env  # run inside the service directory
 ```
 
 ### Service quickstarts (selected)
+
 - PostgreSQL: `cd services/postgres && cp env.sample .env && docker compose up -d`
 - MySQL: `cd services/mysql && cp env.sample .env && docker compose up -d`
 - MariaDB: `cd services/mariadb && cp env.sample .env && docker compose up -d`
@@ -95,6 +111,7 @@ cp env.sample .env  # run inside the service directory
 - SonarQube: `cd services/sonarqube && docker compose up -d`
 
 ## Repo layout (not exhaustive)
+
 - Databases: `services/postgres/`, `services/mysql/`, `services/mariadb/`, `services/mongodb/`, `services/redis/`, `services/cassandra/`, `services/neo4j/`, `services/clickhouse/`, `services/sqlite/`
 - Messaging: `services/kafka/`, `services/redpanda/`, `services/rabbitmq/`, `services/nats/`, `services/activemq/`
 - Search/analytics: `services/elasticsearch/`, `services/opensearch/`, `services/meilisearch/`, `services/typesense/`, `services/logstash/`, `services/kibana/`, `services/loki/`, `services/prometheus/`
@@ -105,10 +122,11 @@ cp env.sample .env  # run inside the service directory
 - Docs: `docs/macOS.md`
 
 ## Contributing
+
 - Add new services under `services/<name>/docker-compose.yml`.
 - Include a short README or comments explaining ports, credentials, and default topics/databases as relevant.
 - Keep defaults sane for local development and prefer official images.
 
 ## License
-MIT (intended; add a LICENSE file if you want formal text).
 
+MIT
