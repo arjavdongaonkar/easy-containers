@@ -1,3 +1,11 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: arjavdongaonkar
+
+---
 
 ---
 name: Bug report
@@ -13,7 +21,7 @@ Which service / compose file?
 
 ## Steps to reproduce
 
-## Expected behavior
+## Expected behaviour
 
 ## Docker info
 
