@@ -6,6 +6,19 @@
 **/data
 **/logs
 
-# macOS metadata
+# OS
 .DS_Store
 
+# Logs
+*.log
+
+# Docker
+**/volumes/
+**/.docker/
+
+# IDEs
+.vscode/
+.idea/
+
+# Temporary files
+tmp/
