@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  node:
+    image: node:${NODE_VERSION:-20}-bookworm
+    working_dir: /workspace
+    command: ["sleep", "infinity"]
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "${NODE_PORT:-3000}:3000"
+    volumes:
+      - ${NODE_APP_PATH:-./app}:/workspace
+      - node_modules_${NODE_VERSION:-20}:/workspace/node_modules
+    tty: true
+
+volumes:
+  node_modules_${NODE_VERSION:-20}:
+
