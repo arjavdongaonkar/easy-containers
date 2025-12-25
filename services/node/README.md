@@ -29,3 +29,12 @@ docker compose exec node node index.js
 - `node_modules` stay in a named volume (`node_modules_${NODE_VERSION}`) to avoid host/OS conflicts.
 - Container stays up with `sleep infinity`; use `docker compose exec node ...` to run scripts.
 
+## Security note
+
+Base Docker images may contain known vulnerabilities depending on the upstream distribution and Node.js version.
+
+If security is important for your use case, consider scanning images using tools such as:
+- Trivy
+- Docker Scout
+
+Users with stricter requirements can also override the Node.js version or base distro via `.env`.
