@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  node:
+    image: node:${NODE_VERSION:-20}-slim
+    container_name: node-dev
+    working_dir: /workspace
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+    volumes:
+      - ${NODE_APP_PATH:-./app}:/workspace
+      - node_modules:/workspace/node_modules
+    ports:
+      - "${NODE_PORT:-3000}:3000"
+    command: sleep infinity
+
+volumes:
+  node_modules:
