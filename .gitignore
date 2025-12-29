@@ -22,3 +22,6 @@
 
 # Temporary files
 tmp/
+
+# Dependency directories
+cli/node_modules
