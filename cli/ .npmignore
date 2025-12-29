@@ -1,0 +1,13 @@
+# .npmignore
+node_modules/
+.git/
+.gitignore
+*.log
+.DS_Store
+test/
+tests/
+*.test.js
+*.spec.js
+.github/
+docs/
+examples/

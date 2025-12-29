@@ -1,0 +1,43 @@
+{
+  "name": "@easy-containers/cli",
+  "version": "1.0.0",
+  "description": "CLI tool to easily run Docker containers for development services",
+  "main": "src/commands/index.js",
+  "bin": {
+    "easy": "./bin/easy.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "docker",
+    "containers",
+    "docker-compose",
+    "development",
+    "cli",
+    "redis",
+    "postgres",
+    "mongodb",
+    "mysql"
+  ],
+  "author": "Arjav Dongaonkar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arjavdongaonkar/easy-containers.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/arjavdongaonkar/easy-containers/issues"
+  },
+  "homepage": "https://github.com/arjavdongaonkar/easy-containers#readme",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^7.2.0",
+    "ora": "^5.4.1",
+    "node-fetch": "^2.6.7"
+  }
+}
