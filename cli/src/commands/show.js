@@ -83,7 +83,7 @@ async function show(service) {
 
     // Networks
     if (composeContent.networks) {
-      console.log(chalk.bold('\n🌐 Networks:'));
+      console.log(chalk.bold('\nNetworks:'));
       Object.keys(composeContent.networks).forEach(network => {
         console.log(chalk.gray(`   - ${network}`));
       });
@@ -91,7 +91,7 @@ async function show(service) {
 
     // Volumes
     if (composeContent.volumes) {
-      console.log(chalk.bold('\n💾 Volumes:'));
+      console.log(chalk.bold('\nVolumes:'));
       Object.keys(composeContent.volumes).forEach(volume => {
         console.log(chalk.gray(`   - ${volume}`));
       });
@@ -101,7 +101,7 @@ async function show(service) {
     console.log(chalk.bold.green('\n✓ Configuration loaded successfully\n'));
 
     // Usage hints
-    console.log(chalk.yellow('💡 Quick commands:'));
+    console.log(chalk.yellow('Quick commands:'));
     console.log(chalk.gray(`   easy up ${service}      - Start the service`));
     console.log(chalk.gray(`   easy down ${service}    - Stop the service`));
     console.log(chalk.gray(`   easy logs ${service}    - View logs`));

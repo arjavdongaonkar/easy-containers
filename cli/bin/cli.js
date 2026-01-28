@@ -4,7 +4,7 @@ const { program } = require('commander');
 const chalk = require('chalk');
 const { up } = require('../src/commands/up');
 const { down } = require('../src/commands/down');
-const { list } = require('../src/commands/list.js');
+const { list } = require('../src/commands/list');
 const { show } = require('../src/commands/show');
 const { status } = require('../src/commands/status');
 const { logs } = require('../src/commands/logs');
@@ -14,7 +14,9 @@ const { pull } = require('../src/commands/pull');
 const { exec } = require('../src/commands/exec');
 const { search } = require('../src/commands/search');
 const { validate } = require('../src/commands/validate');
+const { config } = require('../src/commands/config');
 const { verifyDockerEnvironment } = require('../src/utils/docker.js');
+
 
 // Package info
 const packageJson = require('../package.json');
@@ -74,6 +76,7 @@ program
   .alias('ls')
   .description('List installed container services')
   .option('-a, --all', 'Show all available services from repository')
+  .option('-v, --verbose', 'Show detailed information including descriptions')
   .action(async (options) => {
     try {
       await list(options);
@@ -212,6 +215,22 @@ program
     }
   });
 
+// Config command - Manage service configuration
+program
+  .command('config <service>')
+  .description('Manage service configuration and environment variables')
+  .option('-e, --edit', 'Edit .env file in default editor')
+  .option('-s, --show', 'Show current configuration')
+  .option('-r, --reset', 'Reset to default configuration from sample')
+  .action(async (service, options) => {
+    try {
+      await config(service, options);
+    } catch (error) {
+      console.error(chalk.red(`\n❌ Error: ${error.message}\n`));
+      process.exit(1);
+    }
+  });
+
 // Parse arguments
 program.parse(process.argv);
 
@@ -219,8 +238,9 @@ program.parse(process.argv);
 if (!process.argv.slice(2).length) {
   program.outputHelp();
   
-  console.log(chalk.cyan('\n📚 Quick Start:\n'));
+  console.log(chalk.cyan('\nQuick Start:\n'));
   console.log(chalk.gray('  easy up postgres       # Start PostgreSQL'));
+  console.log(chalk.gray('  easy config postgres   # Configure environment'));
   console.log(chalk.gray('  easy status            # Check running containers'));
   console.log(chalk.gray('  easy logs postgres     # View logs'));
   console.log(chalk.gray('  easy down postgres     # Stop PostgreSQL'));
