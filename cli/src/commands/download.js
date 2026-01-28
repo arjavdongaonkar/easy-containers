@@ -1,7 +1,6 @@
 const chalk = require('chalk');
 const ora = require('ora');
 const { downloadService } = require('../utils/downloader');
-const { getServicePath } = require('../utils/config');
 
 async function download(service) {
   const spinner = ora(`Downloading ${service} configuration...`).start();

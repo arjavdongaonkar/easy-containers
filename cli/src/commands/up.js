@@ -2,7 +2,6 @@ const chalk = require('chalk');
 const ora = require('ora');
 const { downloadService } = require('../utils/downloader');
 const { runDockerCompose } = require('../utils/docker');
-const { getServicePath } = require('../utils/config');
 
 async function up(service) {
   const spinner = ora(`Starting ${service}...`).start();
@@ -20,7 +19,7 @@ async function up(service) {
     
     console.log(chalk.cyan(`\nService: ${service}`));
     console.log(chalk.gray(`Location: ${servicePath}`));
-    console.log(chalk.yellow(`\nTo stop: easy ${service} down`));
+    console.log(chalk.yellow(`\nTo stop: easy down ${service}`));
   } catch (error) {
     spinner.fail(chalk.red(`Failed to start ${service}`));
     throw error;
