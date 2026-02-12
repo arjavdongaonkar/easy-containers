@@ -1,0 +1,27 @@
+{
+  "name": "easy-containers",
+  "version": "1.0.0",
+  "description": "Easy-to-use Docker Compose configurations for common development services",
+  "private": true,
+  "workspaces": [
+    "cli"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arjavdongaonkar/easy-containers.git"
+  },
+  "keywords": [
+    "docker",
+    "docker-compose",
+    "development"
+  ],
+  "author": "Arjav Dongaonkar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arjavdongaonkar/easy-containers/issues"
+  },
+  "homepage": "https://github.com/arjavdongaonkar/easy-containers#readme"
+}

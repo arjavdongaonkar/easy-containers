@@ -121,6 +121,33 @@ cp env.sample .env  # run inside the service directory
 - Security/scanners: `services/clair/`, `services/trivy/`, `services/grype/`, `services/sonarqube/`
 - Docs: `docs/macOS.md`
 
+
+## CLI Usage
+
+You can now use Easy Containers without cloning the repository!
+
+### Installation
+
+```bash
+npm install -g easy-containers
+```
+
+
+### Quick Start
+
+```bash
+# Start a service
+easy up redis
+
+# Stop a service
+easy down redis 
+
+# List all services
+easy list
+```
+
+For more information, see the [CLI documentation](./cli/README.md).
+
 ## Contributing
 
 - Add new services under `services/<name>/docker-compose.yml`.
