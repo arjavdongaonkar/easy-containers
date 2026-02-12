@@ -1,10 +1,10 @@
 {
   "name": "easy-containers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI tool for managing Docker containers easily",
   "main": "bin/cli.js",
   "bin": {
-    "easy": "./bin/cli.js"
+    "easy": "bin/cli.js"
   },
   "scripts": {
     "start": "node bin/cli.js",
@@ -22,7 +22,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/arjavdongaonkar/easy-containers.git"
+    "url": "git+https://github.com/arjavdongaonkar/easy-containers.git"
   },
   "bugs": {
     "url": "https://github.com/arjavdongaonkar/easy-containers/issues"

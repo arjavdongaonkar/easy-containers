@@ -10,11 +10,16 @@ Easy Containers is a command line tool to manage Docker services quickly.
 
 ## Install
 
+Install globally (recommended):
+
 ```bash
-git clone https://github.com/arjavdongaonkar/easy-containers.git
-cd easy-containers/cli
-npm install
-npm link
+npm install -g easy-containers
+```
+
+Install in current project:
+
+```bash
+npm install easy-containers
 ```
 
 ## Basic usage

@@ -129,7 +129,7 @@ You can now use Easy Containers without cloning the repository!
 ### Installation
 
 ```bash
-npm install -g @easy-containers/cli
+npm install -g easy-containers
 ```
 
 
@@ -137,10 +137,10 @@ npm install -g @easy-containers/cli
 
 ```bash
 # Start a service
-easy redis up
+easy up redis
 
 # Stop a service
-easy redis down
+easy down redis 
 
 # List all services
 easy list
