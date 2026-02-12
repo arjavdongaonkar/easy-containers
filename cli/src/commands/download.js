@@ -13,7 +13,7 @@ async function download(service) {
     
     console.log(chalk.cyan(`\nService: ${service}`));
     console.log(chalk.gray(`Location: ${servicePath}`));
-    console.log(chalk.yellow(`\nTo start: easy ${service} up`));
+    console.log(chalk.yellow(`\nTo start: easy up ${service}`));
   } catch (error) {
     spinner.fail(chalk.red(`Failed to download ${service}`));
     throw error;

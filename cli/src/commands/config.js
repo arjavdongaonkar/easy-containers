@@ -336,38 +336,4 @@ async function showEnvFile(servicePath, envPath) {
   }
 }
 
-/**
- * List all configuration files in service
- */
-async function listConfigFiles(servicePath) {
-  const configFiles = [
-    '.env',
-    'env.sample',
-    '.env.sample',
-    '.env.example',
-    'config.yml',
-    'config.yaml',
-    'docker-compose.override.yml'
-  ];
-
-  const found = [];
-  
-  for (const file of configFiles) {
-    const filePath = path.join(servicePath, file);
-    try {
-      await fs.access(filePath);
-      const stats = await fs.stat(filePath);
-      found.push({
-        name: file,
-        size: stats.size,
-        modified: stats.mtime
-      });
-    } catch {
-      continue;
-    }
-  }
-
-  return found;
-}
-
 module.exports = { config };

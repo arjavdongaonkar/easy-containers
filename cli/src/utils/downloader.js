@@ -5,13 +5,13 @@ const path = require('path');
 const chalk = require('chalk');
 const ora = require('ora');
 const { getServicePath, ensureServicesDir } = require('./config');
+const {
+  REPO_URL,
+  REPO_BRANCH,
+  SERVICES_BASE_PATH
+} = require('../constants/repository');
 
 const execAsync = promisify(exec);
-
-// Repository configuration
-const REPO_URL = 'https://github.com/arjavdongaonkar/easy-containers.git';
-const REPO_BRANCH = 'main';
-const SERVICES_BASE_PATH = 'services'; // Path in repo where services are stored
 
 /**
  * Download service from repository

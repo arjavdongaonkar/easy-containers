@@ -2,19 +2,23 @@
 
 const { program } = require('commander');
 const chalk = require('chalk');
-const { up } = require('../src/commands/up');
-const { down } = require('../src/commands/down');
-const { list } = require('../src/commands/list');
-const { show } = require('../src/commands/show');
-const { status } = require('../src/commands/status');
-const { logs } = require('../src/commands/logs');
-const { restart } = require('../src/commands/restart');
-const { init } = require('../src/commands/init');
-const { pull } = require('../src/commands/pull');
-const { exec } = require('../src/commands/exec');
-const { search } = require('../src/commands/search');
-const { validate } = require('../src/commands/validate');
-const { config } = require('../src/commands/config');
+const {
+  up,
+  down,
+  download,
+  list,
+  show,
+  status,
+  logs,
+  restart,
+  init,
+  pull,
+  exec,
+  search,
+  validate,
+  config,
+  help
+} = require('../src/commands');
 const { verifyDockerEnvironment } = require('../src/utils/docker.js');
 
 
@@ -37,7 +41,8 @@ program
   .name('easy')
   .description('CLI tool for managing Docker containers easily')
   .version(packageJson.version, '-v, --version', 'Output the current version')
-  .helpOption('-h, --help', 'Display help for command');
+  .helpOption('-h, --help', 'Display help for command')
+  .addHelpCommand(false);
 
 // Up command - Start containers
 program
@@ -80,6 +85,19 @@ program
   .action(async (options) => {
     try {
       await list(options);
+    } catch (error) {
+      console.error(chalk.red(`\n❌ Error: ${error.message}\n`));
+      process.exit(1);
+    }
+  });
+
+// Download command - Download service files
+program
+  .command('download <service>')
+  .description('Download service configuration from repository')
+  .action(async (service) => {
+    try {
+      await download(service);
     } catch (error) {
       console.error(chalk.red(`\n❌ Error: ${error.message}\n`));
       process.exit(1);
@@ -225,6 +243,19 @@ program
   .action(async (service, options) => {
     try {
       await config(service, options);
+    } catch (error) {
+      console.error(chalk.red(`\n❌ Error: ${error.message}\n`));
+      process.exit(1);
+    }
+  });
+
+// Help command - Enhanced guide
+program
+  .command('help')
+  .description('Show detailed help and examples')
+  .action(async () => {
+    try {
+      await help();
     } catch (error) {
       console.error(chalk.red(`\n❌ Error: ${error.message}\n`));
       process.exit(1);
