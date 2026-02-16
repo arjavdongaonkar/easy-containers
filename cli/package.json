@@ -1,6 +1,6 @@
 {
   "name": "easy-containers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI tool for managing Docker containers easily",
   "main": "bin/cli.js",
   "bin": {
