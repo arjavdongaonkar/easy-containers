@@ -12,6 +12,7 @@ const {
 } = require('../constants/repository');
 
 const execAsync = promisify(exec);
+const ENV_SAMPLE_FILENAMES = ['env.sample', '.env.sample', '.env.example', 'env.example'];
 
 /**
  * Download service from repository
@@ -25,6 +26,14 @@ async function downloadService(service) {
   try {
     await fs.access(servicePath);
     console.log(chalk.gray(`Service ${service} already exists locally`));
+    const envResult = await ensureEnvFile(servicePath);
+    if (envResult.created) {
+      console.log(
+        chalk.gray(
+          `Created .env from ${path.basename(envResult.samplePath)} for ${service}`
+        )
+      );
+    }
     return servicePath;
   } catch {
     // Service doesn't exist, need to download
@@ -37,7 +46,13 @@ async function downloadService(service) {
   try {
     // Try to download from GitHub repo
     await downloadFromGitRepo(service, servicePath, spinner);
+    const envResult = await ensureEnvFile(servicePath);
     spinner.succeed(chalk.green(`Downloaded ${service} successfully`));
+    if (envResult.created) {
+      console.log(
+        chalk.gray(`Created .env from ${path.basename(envResult.samplePath)}`)
+      );
+    }
     return servicePath;
   } catch (error) {
     spinner.warn(chalk.yellow(`Could not download from repository: ${error.message}`));
@@ -46,13 +61,58 @@ async function downloadService(service) {
     spinner.start(`Creating ${service} from template...`);
     try {
       await createServiceFromTemplate(service, servicePath);
+      const envResult = await ensureEnvFile(servicePath);
       spinner.succeed(chalk.green(`Created ${service} from template`));
+      if (envResult.created) {
+        console.log(
+          chalk.gray(`Created .env from ${path.basename(envResult.samplePath)}`)
+        );
+      }
       return servicePath;
     } catch (templateError) {
       spinner.fail(chalk.red(`Failed to create service`));
       throw new Error(`Failed to create service ${service}: ${templateError.message}`);
     }
   }
+}
+
+/**
+ * Find env sample file in a service directory
+ */
+async function findEnvSamplePath(servicePath) {
+  for (const fileName of ENV_SAMPLE_FILENAMES) {
+    const samplePath = path.join(servicePath, fileName);
+    try {
+      await fs.access(samplePath);
+      return samplePath;
+    } catch {
+      continue;
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Ensure .env file exists by copying from sample when available
+ */
+async function ensureEnvFile(servicePath) {
+  const envPath = path.join(servicePath, '.env');
+
+  try {
+    await fs.access(envPath);
+    return { created: false, envPath, samplePath: null };
+  } catch {
+    // .env missing, try sample file
+  }
+
+  const samplePath = await findEnvSamplePath(servicePath);
+  if (!samplePath) {
+    return { created: false, envPath, samplePath: null };
+  }
+
+  await fs.copyFile(samplePath, envPath);
+  return { created: true, envPath, samplePath };
 }
 
 /**
@@ -474,5 +534,6 @@ module.exports = {
   updateService,
   createServiceFromTemplate,
   listAvailableServices,
-  serviceExistsInRepo
+  serviceExistsInRepo,
+  ensureEnvFile
 };
