@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx:${NGINX_TAG:-1.27-alpine}
+    ports:
+      - "${NGINX_PORT:-8080}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5

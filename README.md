@@ -26,6 +26,10 @@ Ready-to-run container setups for common development dependencies. Clone the rep
 
 - MinIO, LocalStack, Mailpit, HashiCorp Vault, Consul, Etcd, Jaeger, Zipkin
 
+**Web / reverse proxy**
+
+- NGINX
+
 **Frontend / API mocking**
 
 - WireMock, MockServer, JSON Server
@@ -79,6 +83,7 @@ cp env.sample .env  # run inside the service directory
 - MariaDB: `cd services/mariadb && cp env.sample .env && docker compose up -d`
 - MongoDB: `cd services/mongodb && cp env.sample .env && docker compose up -d`
 - Redis: `cd services/redis && docker compose up -d`
+- NGINX: `cd services/nginx && docker compose up -d`
 - Kafka: `cd services/kafka && docker compose up -d`
 - Redpanda: `cd services/redpanda && docker compose up -d`
 - RabbitMQ: `cd services/rabbitmq && cp env.sample .env && docker compose up -d` (UI `localhost:15672`)
@@ -116,6 +121,7 @@ cp env.sample .env  # run inside the service directory
 - Messaging: `services/kafka/`, `services/redpanda/`, `services/rabbitmq/`, `services/nats/`, `services/activemq/`
 - Search/analytics: `services/elasticsearch/`, `services/opensearch/`, `services/meilisearch/`, `services/typesense/`, `services/logstash/`, `services/kibana/`, `services/loki/`, `services/prometheus/`
 - Dev/support: `services/minio/`, `services/localstack/`, `services/mailpit/`, `services/vault/`, `services/consul/`, `services/etcd/`, `services/jaeger/`, `services/zipkin/`
+- Web/proxy: `services/nginx/`
 - Mocking: `services/wiremock/`, `services/mockserver/`, `services/json-server/`
 - CI/runners: `services/jenkins/`, `services/gitlab-runner/`, `services/drone/`
 - Security/scanners: `services/clair/`, `services/trivy/`, `services/grype/`, `services/sonarqube/`
