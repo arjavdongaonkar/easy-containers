@@ -22,3 +22,6 @@
 
 # Temporary files
 tmp/
+
+# Personal Claude Code settings (keep .claude/skills/ tracked)
+.claude/settings.local.json
