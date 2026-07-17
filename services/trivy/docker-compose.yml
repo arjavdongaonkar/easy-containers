@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   trivy:
-    image: aquasec/trivy:0.52.2
+    image: aquasec/trivy:0.72.0
     entrypoint: ["tail", "-f", "/dev/null"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

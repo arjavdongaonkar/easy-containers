@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  valkey:
+    image: valkey/valkey:${VALKEY_TAG:-9.1-alpine}
+    command: ["valkey-server", "--appendonly", "yes"]
+    ports:
+      - "${VALKEY_PORT:-6380}:6379"
+    volumes:
+      - valkey-data:/data
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  valkey-data:
+    name: valkey-data-${VALKEY_TAG:-9.1-alpine}

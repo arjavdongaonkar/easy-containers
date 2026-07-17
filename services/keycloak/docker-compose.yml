@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:${KEYCLOAK_TAG:-26.7}
+    env_file:
+      - .env
+    command: ["start-dev"]
+    ports:
+      - "${KEYCLOAK_PORT:-8085}:8080"
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    # Keycloak's image is a minimal UBI without curl/wget/bash, so a reliable
+    # container healthcheck isn't practical here. Readiness: http://localhost:8085/
+    # (admin console) once the log prints "Running the server in development mode".
+
+volumes:
+  keycloak-data:
+    name: keycloak-data-${KEYCLOAK_TAG:-26.7}

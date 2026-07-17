@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   typesense:
-    image: typesense/typesense:0.25.2
+    image: typesense/typesense:${TYPESENSE_TAG:-30.2}
     env_file:
       - .env
     ports:
@@ -18,4 +18,5 @@ services:
 
 volumes:
   typesense-data:
+    name: typesense-data-${TYPESENSE_TAG:-30.2}
 

@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  memcached:
+    image: memcached:${MEMCACHED_TAG:-1.6-alpine}
+    command: ["memcached", "-m", "${MEMCACHED_MEMORY_MB:-64}"]
+    ports:
+      - "${MEMCACHED_PORT:-11211}:11211"
+    healthcheck:
+      test: ["CMD-SHELL", "printf 'stats\\nquit\\n' | nc -w1 localhost 11211 | grep -q uptime || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# In-memory cache - no volume by design.

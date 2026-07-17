@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  sftp:
+    image: atmoz/sftp:${SFTP_TAG:-alpine}
+    command: "${SFTP_USER:-devuser}:${SFTP_PASSWORD:-devpass}:1001"
+    ports:
+      - "${SFTP_PORT:-2222}:22"
+    volumes:
+      - sftp-data:/home/${SFTP_USER:-devuser}/upload
+    healthcheck:
+      test: ["CMD-SHELL", "nc -z localhost 22 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+# Connect: sftp -P 2222 devuser@localhost   (password from .env)
+
+volumes:
+  sftp-data:
+    name: sftp-data-${SFTP_TAG:-alpine}

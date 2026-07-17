@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   zipkin:
-    image: openzipkin/zipkin:2.24.3
+    image: openzipkin/zipkin:3.6.1
     ports:
       - "9411:9411"
     healthcheck:

@@ -43,7 +43,7 @@ Examples:
 
 ## What the script does
 
-- Creates `.env` from `env.sample` on first run if `.env` doesn't exist yet (services without `env.sample`, e.g. redis/nginx/kafka, need no `.env`).
+- Creates `.env` from `env.sample` on first run if `.env` doesn't exist yet (services without `env.sample`, e.g. nginx/elasticsearch/vault, need no `.env`).
 - For each `KEY=VALUE` argument, updates the existing line in `.env` if present, else appends it. This lets a service run with a non-default port, password, image tag, etc. without editing files by hand.
 - Runs the matching `docker compose` subcommand from inside `services/<name>/` and prints `docker compose ps` after `up`/`restart` so the user sees exposed ports immediately.
 

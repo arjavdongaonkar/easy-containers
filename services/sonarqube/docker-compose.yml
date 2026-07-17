@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   sonarqube:
-    image: sonarqube:10.5.1-community
+    image: sonarqube:${SONARQUBE_TAG:-26.7.0.124771-community}
     ports:
       - "9001:9000"
     environment:
@@ -19,6 +19,9 @@ services:
 
 volumes:
   sonarqube-data:
+    name: sonarqube-data-${SONARQUBE_TAG:-26.7.0.124771-community}
   sonarqube-logs:
+    name: sonarqube-logs-${SONARQUBE_TAG:-26.7.0.124771-community}
   sonarqube-extensions:
+    name: sonarqube-extensions-${SONARQUBE_TAG:-26.7.0.124771-community}
 

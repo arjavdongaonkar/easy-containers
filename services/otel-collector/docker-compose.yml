@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:${OTEL_TAG:-0.156.0}
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    volumes:
+      - ./otel-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+    ports:
+      - "${OTEL_GRPC_PORT:-4317}:4317"
+      - "${OTEL_HTTP_PORT:-4318}:4318"
+      - "${OTEL_HEALTH_PORT:-13133}:13133"
+    # Distroless image (no shell) - health_check extension exposed on :13133
+    # instead of a container healthcheck. GET http://localhost:13133/
+
+# Send OTLP traces/metrics/logs to localhost:4317 (gRPC) or :4318 (HTTP).
+# Default config logs everything to the collector's stdout (debug exporter).

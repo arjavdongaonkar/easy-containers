@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  scylladb:
+    image: scylladb/scylla:${SCYLLADB_TAG:-2026.2.1}
+    command: ["--smp", "1", "--overprovisioned", "1", "--developer-mode", "1"]
+    ports:
+      - "${SCYLLADB_PORT:-9043}:9042"
+    volumes:
+      - scylladb-data:/var/lib/scylla
+    healthcheck:
+      test: ["CMD-SHELL", "nodetool status | grep -q '^UN' || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 10
+
+# CQL on localhost:9043 (Cassandra-compatible). Dev/single-core tuning applied.
+
+volumes:
+  scylladb-data:
+    name: scylladb-data-${SCYLLADB_TAG:-2026.2.1}

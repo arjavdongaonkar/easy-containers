@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   logstash:
-    image: docker.elastic.co/logstash/logstash:8.15.1
+    image: docker.elastic.co/logstash/logstash:9.5.0
     ports:
       - "5044:5044"
       - "9601:9600"

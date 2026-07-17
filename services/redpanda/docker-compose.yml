@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   redpanda:
-    image: redpandadata/redpanda:${REDPANDA_TAG:-v24.1.8}
+    image: redpandadata/redpanda:${REDPANDA_TAG:-v26.1.13}
     command:
       - redpanda
       - start

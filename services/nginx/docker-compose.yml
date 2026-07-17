@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   nginx:
-    image: nginx:${NGINX_TAG:-1.27-alpine}
+    image: nginx:${NGINX_TAG:-1.30-alpine}
     ports:
       - "${NGINX_PORT:-8080}:80"
     healthcheck:

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   jenkins:
-    image: jenkins/jenkins:lts-jdk17
+    image: jenkins/jenkins:${JENKINS_TAG:-lts-jdk21}
     user: root
     ports:
       - "8083:8080"
@@ -18,4 +18,5 @@ services:
 
 volumes:
   jenkins-data:
+    name: jenkins-data-${JENKINS_TAG:-lts-jdk21}
 

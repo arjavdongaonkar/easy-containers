@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  grafana:
+    image: grafana/grafana:${GRAFANA_TAG:-13.0.3}
+    env_file:
+      - .env
+    ports:
+      - "${GRAFANA_PORT:-3001}:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://localhost:3000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Standalone Grafana. Add Prometheus/Loki/Tempo datasources pointing at
+# http://host.docker.internal:<port> to reach the other stacks.
+
+volumes:
+  grafana-data:
+    name: grafana-data-${GRAFANA_TAG:-13.0.3}

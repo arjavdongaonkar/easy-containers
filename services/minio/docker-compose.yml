@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   minio:
-    image: quay.io/minio/minio:RELEASE.2024-08-03T04-33-23Z
+    image: quay.io/minio/minio:${MINIO_TAG:-RELEASE.2025-09-07T16-13-09Z}
     env_file:
       - .env
     command: server /data --console-address ":9001"
@@ -19,4 +19,5 @@ services:
 
 volumes:
   minio-data:
+    name: minio-data-${MINIO_TAG:-RELEASE.2025-09-07T16-13-09Z}
 

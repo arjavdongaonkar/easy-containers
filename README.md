@@ -12,23 +12,44 @@ Ready-to-run container setups for common development dependencies. Clone the rep
 
 **Databases**
 
-- PostgreSQL, MySQL, MariaDB, MongoDB, Redis, Cassandra, Neo4j, ClickHouse, SQLite (with sqlite-web)
+- PostgreSQL, MySQL, MariaDB, MongoDB, Cassandra, Neo4j, ClickHouse, SQLite (with sqlite-web)
+- CockroachDB (distributed SQL), ScyllaDB (Cassandra-compatible), TimescaleDB + InfluxDB (time-series)
 
-**Message brokers / queues**
+**Caches**
 
-- Kafka + Zookeeper, RabbitMQ, NATS, ActiveMQ, Redpanda (Kafka-compatible)
+- Redis, Valkey (Redis fork), Memcached
 
-**Search / indexing / analytics**
+**Vector databases**
 
-- Elasticsearch, OpenSearch, Meilisearch, Typesense, Logstash, Kibana, Grafana Loki stack, Prometheus
+- Qdrant, Weaviate
+
+**Message brokers / queues / streaming**
+
+- Kafka + Zookeeper, RabbitMQ, NATS, ActiveMQ, Redpanda (Kafka-compatible), Apache Pulsar, Mosquitto (MQTT)
+
+**Search / indexing**
+
+- Elasticsearch, OpenSearch, Meilisearch, Typesense, Logstash, Kibana
+
+**Observability**
+
+- Prometheus, Grafana, Grafana Loki stack, Tempo, OpenTelemetry Collector, Jaeger, Zipkin
+
+**Identity / workflow**
+
+- Keycloak (OIDC/OAuth), Temporal (durable workflows)
 
 **Dev tools / supporting services**
 
-- MinIO, LocalStack, Mailpit, HashiCorp Vault, Consul, Etcd, Jaeger, Zipkin
+- MinIO, LocalStack, Mailpit, HashiCorp Vault, Consul, Etcd, SFTP
+
+**Database admin UIs**
+
+- Adminer, pgAdmin
 
 **Web / reverse proxy**
 
-- NGINX
+- NGINX, Traefik, Caddy
 
 **Frontend / API mocking**
 
@@ -115,13 +136,41 @@ cp env.sample .env  # run inside the service directory
 - Grype: `cd services/grype && docker compose up -d`
 - SonarQube: `cd services/sonarqube && docker compose up -d`
 
+New services:
+
+- CockroachDB: `cd services/cockroachdb && docker compose up -d` (SQL `26257`, UI `localhost:8093`)
+- ScyllaDB: `cd services/scylladb && docker compose up -d` (CQL `localhost:9043`)
+- TimescaleDB: `cd services/timescaledb && cp env.sample .env && docker compose up -d` (`localhost:5433`)
+- InfluxDB: `cd services/influxdb && cp env.sample .env && docker compose up -d` (UI `localhost:8086`)
+- Valkey: `cd services/valkey && docker compose up -d` (`localhost:6380`)
+- Memcached: `cd services/memcached && docker compose up -d` (`localhost:11211`)
+- Qdrant: `cd services/qdrant && docker compose up -d` (HTTP `localhost:6333`)
+- Weaviate: `cd services/weaviate && docker compose up -d` (`localhost:8087`)
+- Pulsar: `cd services/pulsar && docker compose up -d` (broker `6650`, admin `localhost:8094`)
+- Mosquitto (MQTT): `cd services/mosquitto && docker compose up -d` (`localhost:1883`)
+- Grafana: `cd services/grafana && cp env.sample .env && docker compose up -d` (`localhost:3001`)
+- Tempo: `cd services/tempo && docker compose up -d` (`localhost:3200`, OTLP `4317/4318`)
+- OpenTelemetry Collector: `cd services/otel-collector && docker compose up -d` (OTLP `4317/4318`)
+- Keycloak: `cd services/keycloak && cp env.sample .env && docker compose up -d` (`localhost:8085`, admin/admin)
+- Temporal: `cd services/temporal && docker compose up -d` (gRPC `7233`, UI `localhost:8233`)
+- SFTP: `cd services/sftp && cp env.sample .env && docker compose up -d` (`sftp -P 2222 devuser@localhost`)
+- Adminer: `cd services/adminer && docker compose up -d` (`localhost:8088`)
+- pgAdmin: `cd services/pgadmin && cp env.sample .env && docker compose up -d` (`localhost:8089`)
+- Traefik: `cd services/traefik && docker compose up -d` (proxy `8090`, dashboard `localhost:8091`)
+- Caddy: `cd services/caddy && docker compose up -d` (`localhost:8092`)
+
 ## Repo layout (not exhaustive)
 
-- Databases: `services/postgres/`, `services/mysql/`, `services/mariadb/`, `services/mongodb/`, `services/redis/`, `services/cassandra/`, `services/neo4j/`, `services/clickhouse/`, `services/sqlite/`
-- Messaging: `services/kafka/`, `services/redpanda/`, `services/rabbitmq/`, `services/nats/`, `services/activemq/`
-- Search/analytics: `services/elasticsearch/`, `services/opensearch/`, `services/meilisearch/`, `services/typesense/`, `services/logstash/`, `services/kibana/`, `services/loki/`, `services/prometheus/`
-- Dev/support: `services/minio/`, `services/localstack/`, `services/mailpit/`, `services/vault/`, `services/consul/`, `services/etcd/`, `services/jaeger/`, `services/zipkin/`
-- Web/proxy: `services/nginx/`
+- Databases: `services/postgres/`, `services/mysql/`, `services/mariadb/`, `services/mongodb/`, `services/cassandra/`, `services/neo4j/`, `services/clickhouse/`, `services/sqlite/`, `services/cockroachdb/`, `services/scylladb/`, `services/timescaledb/`, `services/influxdb/`
+- Caches: `services/redis/`, `services/valkey/`, `services/memcached/`
+- Vector DBs: `services/qdrant/`, `services/weaviate/`
+- Messaging: `services/kafka/`, `services/redpanda/`, `services/rabbitmq/`, `services/nats/`, `services/activemq/`, `services/pulsar/`, `services/mosquitto/`
+- Search: `services/elasticsearch/`, `services/opensearch/`, `services/meilisearch/`, `services/typesense/`, `services/logstash/`, `services/kibana/`
+- Observability: `services/prometheus/`, `services/grafana/`, `services/loki/`, `services/tempo/`, `services/otel-collector/`, `services/jaeger/`, `services/zipkin/`
+- Identity/workflow: `services/keycloak/`, `services/temporal/`
+- Dev/support: `services/minio/`, `services/localstack/`, `services/mailpit/`, `services/vault/`, `services/consul/`, `services/etcd/`, `services/sftp/`
+- DB admin UIs: `services/adminer/`, `services/pgadmin/`
+- Web/proxy: `services/nginx/`, `services/traefik/`, `services/caddy/`
 - Mocking: `services/wiremock/`, `services/mockserver/`, `services/json-server/`
 - CI/runners: `services/jenkins/`, `services/gitlab-runner/`, `services/drone/`
 - Security/scanners: `services/clair/`, `services/trivy/`, `services/grype/`, `services/sonarqube/`

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   clair:
-    image: quay.io/projectquay/clair:4.7.4
+    image: quay.io/projectquay/clair:4.9.0
     environment:
       - CLAIR_MODE=combo
     ports:

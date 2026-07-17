@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   rabbitmq:
-    image: rabbitmq:${RABBITMQ_TAG:-3.13}-management
+    image: rabbitmq:${RABBITMQ_TAG:-4.3}-management
     env_file:
       - .env
     ports:

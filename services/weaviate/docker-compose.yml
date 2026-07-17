@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  weaviate:
+    image: cr.weaviate.io/semitechnologies/weaviate:${WEAVIATE_TAG:-1.38.5}
+    command: ["--host", "0.0.0.0", "--port", "8080", "--scheme", "http"]
+    environment:
+      PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      DEFAULT_VECTORIZER_MODULE: "none"
+      QUERY_DEFAULTS_LIMIT: "25"
+    ports:
+      - "${WEAVIATE_HTTP_PORT:-8087}:8080"
+      - "${WEAVIATE_GRPC_PORT:-50051}:50051"
+    volumes:
+      - weaviate-data:/var/lib/weaviate
+    # weaviate's image ships no shell/curl, so no container healthcheck.
+    # Readiness: GET http://localhost:8087/v1/.well-known/ready
+
+volumes:
+  weaviate-data:
+    name: weaviate-data-${WEAVIATE_TAG:-1.38.5}

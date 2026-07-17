@@ -10,7 +10,7 @@ services:
     ports:
       - "${MYSQL_PORT:-3306}:3306"
     volumes:
-      - mysql-data-${MYSQL_TAG:-8.4}:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u${MYSQL_USER:-root} -p${MYSQL_PASSWORD:-$MYSQL_ROOT_PASSWORD}"]
       interval: 10s
@@ -18,5 +18,6 @@ services:
       retries: 5
 
 volumes:
-  mysql-data-8.4:
+  mysql-data:
+    name: mysql-data-${MYSQL_TAG:-8.4}
 

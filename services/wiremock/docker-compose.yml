@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   wiremock:
-    image: wiremock/wiremock:3.6.0
+    image: wiremock/wiremock:3.13.2
     command: ["--verbose"]
     ports:
       - "8082:8080"

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   consul:
-    image: hashicorp/consul:1.19.0
+    image: hashicorp/consul:1.22
     command: agent -dev -client=0.0.0.0
     ports:
       - "8500:8500"
