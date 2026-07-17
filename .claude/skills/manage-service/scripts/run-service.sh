@@ -53,11 +53,13 @@ for kv in "$@"; do
   [[ "$kv" == --* ]] && continue
   key="${kv%%=*}"
   val="${kv#*=}"
+  # Drop any existing line for this key, then append the new value. Done
+  # without sed so values containing sed metacharacters (| & \ /) in
+  # passwords, tokens, image tags, etc. are written verbatim.
   if grep -q "^${key}=" .env; then
-    sed -i.bak "s|^${key}=.*|${key}=${val}|" .env && rm -f .env.bak
-  else
-    echo "${key}=${val}" >> .env
+    grep -v "^${key}=" .env > .env.tmp && mv .env.tmp .env
   fi
+  printf '%s=%s\n' "$key" "$val" >> .env
 done
 
 case "$ACTION" in
