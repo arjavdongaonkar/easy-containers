@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   mailpit:
-    image: axllent/mailpit:v1.20.2
+    image: axllent/mailpit:v1.30.4
     ports:
       - "8025:8025"
       - "1025:1025"

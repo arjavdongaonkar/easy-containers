@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  influxdb:
+    image: influxdb:${INFLUXDB_TAG:-2.7}
+    env_file:
+      - .env
+    ports:
+      - "${INFLUXDB_PORT:-8086}:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    healthcheck:
+      test: ["CMD-SHELL", "influx ping || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+# First boot auto-provisions org/bucket/token from the DOCKER_INFLUXDB_INIT_* vars.
+# UI + API at http://localhost:8086/
+
+volumes:
+  influxdb-data:
+    name: influxdb-data-${INFLUXDB_TAG:-2.7}

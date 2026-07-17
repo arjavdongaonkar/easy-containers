@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  qdrant:
+    image: qdrant/qdrant:${QDRANT_TAG:-v1.18.3}
+    ports:
+      - "${QDRANT_HTTP_PORT:-6333}:6333"
+      - "${QDRANT_GRPC_PORT:-6334}:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+    # qdrant's image ships no shell/curl, so no container healthcheck.
+    # Readiness: GET http://localhost:6333/healthz
+
+volumes:
+  qdrant-data:
+    name: qdrant-data-${QDRANT_TAG:-v1.18.3}

@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   vault:
-    image: hashicorp/vault:1.17.3
+    image: hashicorp/vault:1.21
     environment:
       - VAULT_DEV_ROOT_TOKEN_ID=root
       - VAULT_DEV_LISTEN_ADDRESS=0.0.0.0:8200

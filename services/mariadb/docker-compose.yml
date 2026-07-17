@@ -2,13 +2,13 @@ version: "3.9"
 
 services:
   mariadb:
-    image: mariadb:${MARIADB_TAG:-11.4}
+    image: mariadb:${MARIADB_TAG:-11.8}
     env_file:
       - .env
     ports:
       - "${MARIADB_PORT:-3307}:3306"
     volumes:
-      - mariadb-data-${MARIADB_TAG:-11.4}:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u${MARIADB_USER:-root} -p${MARIADB_PASSWORD:-$MARIADB_ROOT_PASSWORD}"]
       interval: 10s
@@ -16,5 +16,6 @@ services:
       retries: 5
 
 volumes:
-  mariadb-data-11.4:
+  mariadb-data:
+    name: mariadb-data-${MARIADB_TAG:-11.8}
 

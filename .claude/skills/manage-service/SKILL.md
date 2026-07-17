@@ -28,8 +28,8 @@ Examples:
 # Stop redis
 .claude/skills/manage-service/scripts/run-service.sh redis down
 
-# Restart kafka with a different tag
-.claude/skills/manage-service/scripts/run-service.sh kafka restart KAFKA_TAG=3.7
+# Restart redis on a different image tag
+.claude/skills/manage-service/scripts/run-service.sh redis restart REDIS_TAG=8.6
 
 # Wipe volumes too (destructive - confirm with user first)
 .claude/skills/manage-service/scripts/run-service.sh postgres down --volumes
@@ -43,15 +43,15 @@ Examples:
 
 ## What the script does
 
-- Creates `.env` from `env.sample` on first run if `.env` doesn't exist yet (services without `env.sample`, e.g. redis/nginx/kafka, need no `.env`).
-- For each `KEY=VALUE` argument, updates the existing line in `.env` if present, else appends it. This lets a service run with a non-default port, password, image tag, etc. without editing files by hand.
+- Creates `.env` from `env.sample` on first run if `.env` doesn't exist yet. Most services ship an `env.sample`; the few without one (e.g. nginx, prometheus, vault, jaeger, zipkin) get an empty `.env`.
+- For each `KEY=VALUE` argument, updates the existing line in `.env` if present, else appends it. This lets a service run with a non-default port, password, image tag, etc. without editing files by hand. **Overrides persist** — a value written to `.env` stays until you change it or delete `.env`, so a later bare `up` reuses the last override.
 - Runs the matching `docker compose` subcommand from inside `services/<name>/` and prints `docker compose ps` after `up`/`restart` so the user sees exposed ports immediately.
 
 ## Guidance
 
 - Before overriding a var, check `env.sample` (or the `${VAR:-default}` interpolations in `docker-compose.yml`) to confirm the exact variable name expected — names are inconsistent across services (e.g. `POSTGRES_PORT` vs `MONGO_PORT` vs `KAFKA_TAG`).
 - `down --volumes` deletes persisted data (e.g. Postgres data volume) — confirm with the user before running it, per this repo's destructive-action norms.
-- Multiple services can run simultaneously since each has isolated named volumes and configurable host ports — reuse this script per service if the user wants a multi-service stack (e.g. postgres + redis).
+- Multiple services can run simultaneously since each has isolated named volumes — reuse this script per service for a multi-service stack (e.g. postgres + redis). Watch for **host-port clashes**: some services default to the same port (kafka & redpanda 9092, minio & clickhouse 9000, minio-console & sonarqube 9001, otel-collector & tempo 4317). Override one side's `*_PORT` when running such a pair together.
 - If `docker compose` is not available, tell the user to start Docker Desktop or Colima (`colima start --cpu 2 --memory 4 --disk 20`) per `README.md`.
 
 ## If the requested var isn't in env.sample yet

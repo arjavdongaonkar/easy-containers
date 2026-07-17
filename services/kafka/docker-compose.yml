@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:${KAFKA_ZK_TAG:-7.6.1}
+    image: confluentinc/cp-zookeeper:${KAFKA_ZK_TAG:-7.9.8}
     ports:
       - "${ZOOKEEPER_PORT:-2181}:2181"
     environment:
@@ -10,7 +10,7 @@ services:
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: confluentinc/cp-kafka:${KAFKA_TAG:-7.6.1}
+    image: confluentinc/cp-kafka:${KAFKA_TAG:-7.9.8}
     depends_on:
       - zookeeper
     ports:

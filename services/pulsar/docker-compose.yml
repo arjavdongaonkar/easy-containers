@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  pulsar:
+    image: apachepulsar/pulsar:${PULSAR_TAG:-4.2.3}
+    command: ["bin/pulsar", "standalone"]
+    ports:
+      - "${PULSAR_BROKER_PORT:-6650}:6650"
+      - "${PULSAR_ADMIN_PORT:-8094}:8080"
+    volumes:
+      - pulsar-data:/pulsar/data
+    healthcheck:
+      test: ["CMD-SHELL", "bin/pulsar-admin brokers healthcheck || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 10
+
+# Standalone (broker + bookie + zookeeper in one). Broker: pulsar://localhost:6650
+# Admin/REST: http://localhost:8094/
+
+volumes:
+  pulsar-data:
+    name: pulsar-data-${PULSAR_TAG:-4.2.3}

@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:${MOSQUITTO_TAG:-2.1.2}
+    ports:
+      - "${MOSQUITTO_PORT:-1883}:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto-data:/mosquitto/data
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_sub -h localhost -t '$$SYS/#' -C 1 -W 3 >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  mosquitto-data:
+    name: mosquitto-data-${MOSQUITTO_TAG:-2.1.2}

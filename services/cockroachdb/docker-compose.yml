@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  cockroachdb:
+    image: cockroachdb/cockroach:${COCKROACHDB_TAG:-v26.2.4}
+    command: ["start-single-node", "--insecure"]
+    ports:
+      - "${COCKROACHDB_SQL_PORT:-26257}:26257"
+      - "${COCKROACHDB_UI_PORT:-8093}:8080"
+    volumes:
+      - cockroachdb-data:/cockroach/cockroach-data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:8080/health?ready=1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Insecure single-node (dev only). SQL: postgresql://root@localhost:26257/defaultdb?sslmode=disable
+# Admin UI: http://localhost:8093/
+
+volumes:
+  cockroachdb-data:
+    name: cockroachdb-data-${COCKROACHDB_TAG:-v26.2.4}

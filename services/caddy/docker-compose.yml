@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  caddy:
+    image: caddy:${CADDY_TAG:-2.11-alpine}
+    ports:
+      - "${CADDY_HTTP_PORT:-8092}:80"
+      - "${CADDY_HTTPS_PORT:-8443}:443"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://localhost:80 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Default image serves the Caddy welcome page on :80. Mount your own Caddyfile
+# at /etc/caddy/Caddyfile to reverse-proxy other containers.
+
+volumes:
+  caddy-data:
+    name: caddy-data-${CADDY_TAG:-2.11-alpine}
+  caddy-config:
+    name: caddy-config-${CADDY_TAG:-2.11-alpine}

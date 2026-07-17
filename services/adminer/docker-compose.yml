@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  adminer:
+    image: adminer:${ADMINER_TAG:-5.4.2}
+    ports:
+      - "${ADMINER_PORT:-8088}:8080"
+    environment:
+      ADMINER_DEFAULT_SERVER: "${ADMINER_DEFAULT_SERVER:-host.docker.internal}"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO /dev/null http://localhost:8080 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Stateless UI - no volume. Point it at a DB container via the login form or
+# ADMINER_DEFAULT_SERVER (default host.docker.internal reaches host-published ports).

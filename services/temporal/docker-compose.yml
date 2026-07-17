@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  temporal:
+    image: temporalio/temporal:${TEMPORAL_TAG:-1.8.0}
+    command:
+      - server
+      - start-dev
+      - --ip=0.0.0.0
+      - --db-filename=/data/temporal.db
+    ports:
+      - "${TEMPORAL_GRPC_PORT:-7233}:7233"
+      - "${TEMPORAL_UI_PORT:-8233}:8233"
+    volumes:
+      - temporal-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "temporal operator cluster health --address localhost:7233 || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 8
+
+# Dev server with SQLite persistence. Web UI at http://localhost:8233/
+
+volumes:
+  temporal-data:
+    name: temporal-data-${TEMPORAL_TAG:-1.8.0}

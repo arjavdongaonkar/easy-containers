@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_TAG:-9.5.0}
     environment:
       discovery.type: single-node
       xpack.security.enabled: "false"
@@ -24,4 +24,5 @@ services:
 
 volumes:
   es-data:
+    name: es-data-${ELASTIC_TAG:-9.5.0}
 

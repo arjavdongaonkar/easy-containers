@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   etcd:
-    image: quay.io/coreos/etcd:v3.5.12
+    image: quay.io/coreos/etcd:${ETCD_TAG:-v3.6.13}
     command: |
       /usr/local/bin/etcd
       --name s1
@@ -23,4 +23,5 @@ services:
 
 volumes:
   etcd-data:
+    name: etcd-data-${ETCD_TAG:-v3.6.13}
 

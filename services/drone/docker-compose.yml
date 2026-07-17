@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   drone:
-    image: drone/drone:2
+    image: drone/drone:${DRONE_TAG:-2.28.2}
     env_file:
       - .env
     ports:
@@ -17,4 +17,5 @@ services:
 
 volumes:
   drone-data:
+    name: drone-data-${DRONE_TAG:-2.28.2}
 

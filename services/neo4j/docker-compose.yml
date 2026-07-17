@@ -2,20 +2,23 @@ version: "3.9"
 
 services:
   neo4j:
-    image: neo4j:${NEO4J_TAG:-5.23}
+    image: neo4j:${NEO4J_TAG:-5.26}
     env_file:
       - .env
+    environment:
+      NEO4J_AUTH: "neo4j/${NEO4J_PASSWORD:-devpassword}"
     ports:
       - "${NEO4J_HTTP_PORT:-7474}:7474"
       - "${NEO4J_BOLT_PORT:-7687}:7687"
     volumes:
-      - neo4j-data-${NEO4J_TAG:-5.23}:/data
+      - neo4j-data:/data
     healthcheck:
-      test: ["CMD-SHELL", "cypher-shell -u neo4j -p ${NEO4J_PASSWORD:-password} 'RETURN 1;' || exit 1"]
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p ${NEO4J_PASSWORD:-devpassword} 'RETURN 1;' || exit 1"]
       interval: 15s
       timeout: 10s
       retries: 8
 
 volumes:
-  neo4j-data-5.23:
+  neo4j-data:
+    name: neo4j-data-${NEO4J_TAG:-5.26}
 

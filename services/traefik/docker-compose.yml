@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik:${TRAEFIK_TAG:-v3.7.8}
+    command:
+      - --api.insecure=true
+      - --api.dashboard=true
+      - --ping=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    ports:
+      - "${TRAEFIK_WEB_PORT:-8090}:80"
+      - "${TRAEFIK_DASHBOARD_PORT:-8091}:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    healthcheck:
+      test: ["CMD", "traefik", "healthcheck", "--ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# Dashboard at http://localhost:8091/  (insecure mode - local dev only).
+# Route to other containers with traefik.http.* labels on those services.

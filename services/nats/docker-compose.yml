@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   nats:
-    image: nats:${NATS_TAG:-2.10}
+    image: nats:${NATS_TAG:-2.14}
     ports:
       - "${NATS_PORT:-4222}:4222"
       - "${NATS_MONITOR_PORT:-8222}:8222"
