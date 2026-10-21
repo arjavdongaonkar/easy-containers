@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   weaviate:
-    image: cr.weaviate.io/semitechnologies/weaviate:${WEAVIATE_TAG:-1.38.5}
+    image: cr.weaviate.io/semitechnologies/weaviate:${WEAVIATE_TAG:-1.38.22}
     command: ["--host", "0.0.0.0", "--port", "8080", "--scheme", "http"]
     environment:
       PERSISTENCE_DATA_PATH: "/var/lib/weaviate"
@@ -19,4 +19,4 @@ services:
 
 volumes:
   weaviate-data:
-    name: weaviate-data-${WEAVIATE_TAG:-1.38.5}
+    name: weaviate-data-${WEAVIATE_TAG:-1.38.22}
